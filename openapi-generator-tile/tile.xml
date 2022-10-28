@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <build>
+    <plugins>
+
+      <!--Start application with local profile-->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>@spring-boot-maven-plugin.version@</version>
+        <configuration>
+          <jvmArguments>-Dspring.application.admin.enabled=true -Dspring.profiles.active=local
+          </jvmArguments>
+          <wait>1000</wait>
+          <maxAttempts>180</maxAttempts>
+        </configuration>
+        <executions>
+          <execution>
+            <id>start-application-with-local-profile</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>start</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!--Generate OpenAPI document into swagger.yaml file-->
+      <plugin>
+        <groupId>org.springdoc</groupId>
+        <artifactId>springdoc-openapi-maven-plugin</artifactId>
+        <version>@springdoc-openapi-maven-plugin.version@</version>
+        <executions>
+          <execution>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <apiDocsUrl>${apiDocsUrl}</apiDocsUrl>
+          <outputFileName>swagger.json</outputFileName>
+          <outputDir>${basedir}/target</outputDir>
+        </configuration>
+      </plugin>
+
+      <!--Stop application with local profile-->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>@spring-boot-maven-plugin.version@</version>
+        <configuration>
+          <jvmArguments>-Dspring.application.admin.enabled=true -Dspring.profiles.active=local
+          </jvmArguments>
+          <wait>1000</wait>
+          <maxAttempts>180</maxAttempts>
+        </configuration>
+        <executions>
+          <execution>
+            <id>stop-application-with-local-profile</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>stop</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+</project>
+
+

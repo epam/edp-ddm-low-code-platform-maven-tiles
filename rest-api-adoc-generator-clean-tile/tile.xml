@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <build>
+    <plugins>
+
+      <!--Clean rest-api-generated in docs directory-->
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>@maven-clean-plugin.version@</version>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>
+                ${basedir}/docs/modules/${project.artifactId}/pages/rest-api/rest-api-generated/
+              </directory>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
+</project>
+
+

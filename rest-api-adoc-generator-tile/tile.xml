@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <build>
+    <plugins>
+
+      <!--Copy rest-api-includes, snippets into target and then generated document back to doc directory-->
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>@maven-resources-plugin.version@</version>
+        <executions>
+          <execution>
+            <id>copy-rest-api-includes</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>
+                target/asciidoc/docs/modules/${project.artifactId}/pages/rest-api/rest-api-includes/
+              </outputDirectory>
+              <resources>
+                <resource>
+                  <directory>
+                    docs/modules/${project.artifactId}/pages/rest-api/rest-api-includes
+                  </directory>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>copy-generated-snippets</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/target/asciidoc/target/generated-snippets
+              </outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${basedir}/target/generated-snippets</directory>
+                  <includes>
+                    <include>**/*.*</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>copy-generated-rest-api-to-codebase</id>
+            <phase>install</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>
+                docs/modules/${project.artifactId}/pages/rest-api/rest-api-generated
+              </outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${basedir}/target/asciidoc</directory>
+                  <includes>
+                    <include>**/*.*</include>
+                  </includes>
+                  <excludes>
+                    <exclude>**/curl-request.adoc</exclude>
+                    <exclude>**/httpie-request.adoc</exclude>
+                    <exclude>**/request-body.adoc</exclude>
+                    <exclude>**/response-body.adoc</exclude>
+                  </excludes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!--Generate RestAPI adoc's-->
+      <plugin>
+        <groupId>org.openapitools</groupId>
+        <artifactId>openapi-generator-maven-plugin</artifactId>
+        <version>@openapi-generator-maven-plugin.version@</version>
+        <executions>
+          <execution>
+            <id>generate-ascii-docs</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>${project.basedir}/target/swagger.json</inputSpec>
+              <output>${project.basedir}/target/asciidoc/</output>
+              <generatorName>asciidoc</generatorName>
+              <configOptions>
+                <appDescription>MVN app description</appDescription>
+                <appName>MVN App name</appName>
+                <ensureUniqueParams>true</ensureUniqueParams>
+                <infoUrl>MVN info URL</infoUrl>
+                <licenseInfo>MVN This is license info</licenseInfo>
+                <prependFormOrBodyParameters>true</prependFormOrBodyParameters>
+                <snippetDir>target/generated-snippets/</snippetDir>
+                <specDir>docs/modules/${project.artifactId}/pages/rest-api/rest-api-includes/</specDir>
+                <useIntroduction>true</useIntroduction>
+                <useMethodAndPath>true</useMethodAndPath>
+                <useTableTitles>true</useTableTitles>
+              </configOptions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+</project>
+
+
