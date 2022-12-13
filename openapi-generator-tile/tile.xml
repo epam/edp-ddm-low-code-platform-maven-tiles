@@ -40,8 +40,8 @@
         </executions>
         <configuration>
           <apiDocsUrl>${apiDocsUrl}</apiDocsUrl>
-          <outputFileName>swagger.json</outputFileName>
-          <outputDir>${basedir}/target</outputDir>
+          <outputFileName>${swaggerPath}</outputFileName>
+          <outputDir>${basedir}</outputDir>
         </configuration>
       </plugin>
 
