@@ -1,3 +1,0 @@
-**** xref:low-code-platform-maven-tiles:summary.adoc[Механізм генерації asciidoc Rest API документації]
-***** xref:low-code-platform-maven-tiles:usage.adoc[Інструкції по використанню]
-***** xref:low-code-platform-maven-tiles:implementation.adoc[Детальний опис реалізації механізму]
